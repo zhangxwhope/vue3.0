@@ -7,7 +7,9 @@ const messages = {
   en,
 };
 
-export default createI18n({
-  locale: 'zh',
-  messages,
-});
+export default function () {
+  return createI18n({
+    locale: 'zh',
+    messages,
+  });
+}

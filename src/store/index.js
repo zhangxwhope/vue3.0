@@ -1,17 +1,19 @@
 import { createStore, createLogger } from 'vuex';
 
-export default createStore({
-  state: {
-    count: 0,
-  },
-  mutations: {
-    increment(state) {
-      state.count++;
+export default function () {
+  return createStore({
+    state: {
+      count: 0,
     },
-  },
-  actions: {
-  },
-  modules: {
-  },
-  plugins: [createLogger()],
-});
+    mutations: {
+      increment(state) {
+        state.count++;
+      },
+    },
+    actions: {
+    },
+    modules: {
+    },
+    plugins: [createLogger()],
+  });
+}

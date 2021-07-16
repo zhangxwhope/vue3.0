@@ -1,11 +1,12 @@
-import { createRouter, createWebHistory } from 'vue-router';
-import Home from '../views/Home.vue';
+import { createRouter, createMemoryHistory, createWebHistory } from 'vue-router';
+
+const isServer = typeof window === 'undefined';
 
 const routes = [
   {
     path: '/',
     name: 'Home',
-    component: Home,
+    component: () => import(/* webpackChunkName: "home" */ '../views/Home.vue'),
   },
   {
     path: '/about',
@@ -15,17 +16,16 @@ const routes = [
     // which is lazy-loaded when the route is visited.
     component: () => import(/* webpackChunkName: "about" */ '../views/About.vue'),
   },
+  {
+    path: '/composition',
+    name: 'Composition',
+    component: () => import(/* webpackChunkName: "composition" */ '../views/Composition.vue'),
+  },
 ];
 
-const router = createRouter({
-  history: createWebHistory(process.env.BASE_URL),
-  routes,
-});
-
-// router.addRoute({
-//   path: '/other',
-//   name: 'other',
-//   component: Home,
-// });
-
-export default router;
+export default function () {
+  return createRouter({
+    history: isServer ? createMemoryHistory() : createWebHistory(process.env.BASE_URL),
+    routes,
+  });
+}
